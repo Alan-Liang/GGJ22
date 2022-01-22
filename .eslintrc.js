@@ -1,17 +1,71 @@
 module.exports = {
-  root: true,
-  env: {
-    node: true
+  'env': {
+    'browser': true,
+    'es6': true,
+    'node': true,
   },
   'extends': [
+    'eslint:recommended',
+    'plugin:import/errors',
+    'plugin:import/warnings',
     'plugin:vue/vue3-essential',
-    'eslint:recommended'
   ],
-  parserOptions: {
-    parser: 'babel-eslint'
+  'globals': {
+    'Atomics': 'readonly',
+    'SharedArrayBuffer': 'readonly',
   },
-  rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'warn' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'warn' : 'off'
-  }
+  'parserOptions': {
+    'ecmaVersion': 2020,
+    'sourceType': 'module',
+  },
+  'plugins': [
+    'unicorn',
+    'vue',
+  ],
+  'rules': {
+    'array-bracket-spacing': [ 'error', 'always' ],
+    'comma-dangle': [ 'error', 'always-multiline' ],
+    'comma-spacing': 'error',
+    'dot-notation': 'error',
+    'import/first': 'error',
+    'import/no-mutable-exports': 'error',
+    'import/order': 'error',
+    'indent': [ 'error', 2 ],
+    'key-spacing': 'error',
+    'keyword-spacing': 'error',
+    'linebreak-style': [ 'error', 'unix' ],
+    'no-console': 'off',
+    'no-extra-semi': 'off',
+    'no-lonely-if': 'error',
+    'no-multi-spaces': 'error',
+    'no-trailing-spaces': 'error',
+    'no-undef': 'off',
+    'no-unused-vars': 'warn',
+    'no-useless-rename': 'error',
+    'object-curly-spacing': [ 'error', 'always' ],
+    'object-shorthand': 'error',
+    'prefer-const': [ 'error', { destructuring: 'any', ignoreReadBeforeAssign: false } ],
+    'quotes': [ 'error', 'single' ],
+    'require-await': 'error',
+    'semi': [ 'error', 'never', { beforeStatementContinuationChars: 'always' } ],
+    'space-before-blocks': [ 'error', 'always' ],
+    'space-before-function-paren': [ 'error', 'always' ],
+    'space-in-parens': 'error',
+    'space-infix-ops': 'error',
+    'space-unary-ops': 'error',
+    'spaced-comment': [ 'error', 'always', { exceptions: [ '*', '/' ] } ],
+    'unicorn/error-message': 'error',
+    'unicorn/escape-case': 'error',
+    'unicorn/no-array-instanceof': 'error',
+    'unicorn/no-new-buffer': 'error',
+    'unicorn/no-unsafe-regex': 'off',
+    'unicorn/number-literal-case': 'error',
+    'unicorn/prefer-exponentiation-operator': 'error',
+    'unicorn/prefer-includes': 'error',
+    'unicorn/prefer-starts-ends-with': 'error',
+    'unicorn/prefer-text-content': 'error',
+    'unicorn/prefer-type-error': 'error',
+    'unicorn/throw-new-error': 'error',
+    'vue/max-attributes-per-line': [ 'error', { singleline: 6 } ]
+  },
 }
