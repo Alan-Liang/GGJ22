@@ -13,17 +13,19 @@ import { usePlayback, useChallengeInput } from '../../services/lrc'
 import { music } from '../../util/music'
 import { keycode } from '../../util/keycodes'
 import { addWindowListener } from '../../util/window-listener'
+import { pick } from '../../util/random'
 
-const { playing, play, stop } = usePlayback(music.THE_CABLE_TEMPLE)
-const { play: playInput, ok } = useChallengeInput(music.THE_CABLE_TEMPLE, stop)
+const { playing, play, stop } = usePlayback()
+const { play: playInput, ok } = useChallengeInput(stop)
 
 addWindowListener('keydown', e => {
   if (e.keyCode === keycode.ENTER) {
     e.preventDefault()
     if (playing.value) return
     const seed = Math.random()
-    play(seed)
-    playInput(seed)
+    const music_ = pick(Object.values(music)) && music.BOUNDLESS_OCEANS_VAST_SKIES
+    play(music_, seed)
+    playInput(music_, seed)
   }
 })
 

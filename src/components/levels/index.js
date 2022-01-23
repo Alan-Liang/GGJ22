@@ -9,5 +9,5 @@ export const levels = [
   [ ', and two ears', Level1 ],
   [ ', and two devices', Level2 ],
   [ 'on two platforms', Level3 ],
-  [ ', and you and your friend', Level4 ],
+  [ ', and yourself and a friend', Level4 ],
 ]

@@ -30,6 +30,7 @@
 <script setup>
 import { nextTick, ref, reactive } from 'vue'
 import { useLevelState } from './services/state'
+import { isMobile } from './util/mobile'
 import { delay } from './util/promise'
 
 const { levelComponent, nextLevel, completed } = useLevelState()
@@ -43,6 +44,7 @@ const advance = async () => {
 const lines = reactive([
   'You need two hands',
 ])
+if (isMobile) lines[0] = 'You need a computer (not a mobile device)'
 const shadowLine = ref('')
 const finalLine = ref(false)
 
@@ -82,40 +84,6 @@ const showThanks = async () => {
   notransition.value = false
   await nextTick()
   mainLinesEl.value.style.transform = ''
-  // TODO: make scrollable
-}
-
-// eslint-disable-next-line no-unused-vars
-const test = () => {
-  const linesToShow = `
-  , and two ears
-
-  , and two
-
-  , and two email addresses
-  in two domains
-
-  , and two devices
-  on two platforms
-  in two cities
-  in two continents
-
-  , and two friends
-
-  , and a dual-stack network
-
-  , and two web servers
-  , one in IPv4, one in IPv6
-  `.split('\n').filter(Boolean)
-
-  ;(async () => {
-    for (const line of linesToShow) {
-      await delay(2000)
-      await addLine(line)
-    }
-    await delay(2000)
-    showThanks()
-  })()
 }
 </script>
 
@@ -139,6 +107,8 @@ const test = () => {
 .line.line-4 { opacity: 0.6; }
 </style>
 
+<style src="./assets/iosevka-etoile.css"></style>
+
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 img { border: none; }
@@ -155,6 +125,15 @@ body {
   font-size: calc(10px + 0.33vw);
   background-color: #444a4f;
   color: rgba(255, 255, 255, 0.8);
+  padding: 0 8px;
+  font-family: 'Iosevka Etoile Web';
+}
+
+kbd {
+  font-family: 'Iosevka Etoile Web';
+  border: 1px solid #9ab;
+  padding: 2px 4px;
+  border-radius: 2px;
 }
 
 .container {

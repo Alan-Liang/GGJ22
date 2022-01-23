@@ -24,13 +24,16 @@ watch(verify, () => {
     tip.value = ''
     return
   }
+  if (verify.value === 'giveup') {
+    emit('fail')
+  }
   if (verify.value !== otherCode.value) {
-    tip.value = 'Invalid verification code.'
+    tip.value = 'Invalid verification code. Type \'giveup\' to go back.'
     return
   }
   tip.value = ''
   emit('ok')
 })
 
-const emit = defineEmits([ 'ok' ])
+const emit = defineEmits([ 'ok', 'fail' ])
 </script>

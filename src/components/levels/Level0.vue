@@ -1,13 +1,22 @@
 <template>
-  <p>Press <kbd>Tab</kbd> + <kbd>Delete</kbd> simultaneously</p>
+  <p>
+    Press
+    <kbd :class="{ ok: hasTab }">Tab</kbd>
+    and
+    <kbd :class="{ ok: hasDelete }">Delete</kbd>
+    simultaneously
+  </p>
 </template>
 
 <script setup>
+import { computed, reactive } from 'vue'
 import { addWindowListener } from '../../util/window-listener'
 import { keycode } from '../../util/keycodes'
 
 const emit = defineEmits([ 'ok' ])
-const keyPressed = new Set()
+const keyPressed = reactive(new Set())
+const hasTab = computed(() => keyPressed.has(keycode.TAB))
+const hasDelete = computed(() => keyPressed.has(keycode.DELETE))
 addWindowListener('keydown', e => {
   if (e.keyCode === keycode.TAB || e.keyCode === keycode.DELETE) {
     e.preventDefault()
@@ -22,3 +31,10 @@ addWindowListener('keyup', e => {
   }
 })
 </script>
+
+<style scoped>
+.ok {
+  color: #4f6;
+  text-shadow: rgba(255, 255, 255, .8) 0.5px 0.5px 1px;
+}
+</style>

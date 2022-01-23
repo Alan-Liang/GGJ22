@@ -5,7 +5,7 @@ import { pick, seed } from '../util/random'
 import { waitCallback, waitUntil, timeout } from '../util/promise'
 import { useRedlight } from '../services/redlight'
 
-export const usePlayback = music => {
+export const usePlayback = () => {
   const playing = ref(false)
 
   const makeSource = x => new Tone.Synth().connect(new Tone.Panner3D({
@@ -17,7 +17,7 @@ export const usePlayback = music => {
   Tone.Transport.bpm.value = 60
 
   let stop_
-  const play = async seed_ => {
+  const play = async (music, seed_) => {
     if (playing.value) return
     playing.value = true
     await Tone.start()
@@ -45,7 +45,7 @@ export const usePlayback = music => {
   return { playing, play, stop }
 }
 
-export const useChallengeInput = (music, stop) => {
+export const useChallengeInput = stop => {
   const { red, green } = useRedlight()
 
   const sequence = []
@@ -64,7 +64,7 @@ export const useChallengeInput = (music, stop) => {
     }
   }
 
-  const play = async seed_ => {
+  const play = async (music, seed_, onfail = () => {}) => {
     let currentTime = 0
     sequence.length = 0
     seed(seed_)
@@ -80,6 +80,7 @@ export const useChallengeInput = (music, stop) => {
       await waitUntil(() => Tone.now() > now + time)
       if (extraneousHit) {
         extraneousHit = false
+        onfail()
         return
       }
       const key = source === 'left' ? keycode.DELETE : keycode.TAB
@@ -100,6 +101,7 @@ export const useChallengeInput = (music, stop) => {
       } catch (_) {
         red()
         stop()
+        onfail()
         return
       } finally {
         window.removeEventListener('keydown', callback)

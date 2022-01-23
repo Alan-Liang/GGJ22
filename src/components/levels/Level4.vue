@@ -1,7 +1,14 @@
 <template>
   <div>
     <transition name="fade" mode="out-in">
-      <component :is="content" :code="code" :code-in="codeIn" @ok="advance" @fail="fail" />
+      <component
+        :is="content"
+        :code="code"
+        :code-text="codeText"
+        :code-in="codeIn"
+        @ok="advance"
+        @fail="fail"
+      />
     </transition>
   </div>
 </template>
@@ -11,6 +18,8 @@ import { computed, ref } from 'vue'
 import { id, parseId } from '../../services/device-id'
 import { seed, randint } from '../../util/random'
 import { addWindowListener } from '../../util/window-listener'
+import { hash } from '../../util/hash'
+
 import Level4Challenge from './Level4Challenge.vue'
 import Level4Confirm from './Level4Confirm.vue'
 import Level4Instructions from './Level4Instructions.vue'
@@ -29,6 +38,11 @@ const content = computed(() => [
 ][stage.value])
 
 const code = ref(0)
+const codeText = computed(() => {
+  const data = code.value.toString(36).padStart(4, '0')
+  const checksum = hash(id + data).slice(0, 2)
+  return data + checksum
+})
 const codeIn = ref(0)
 
 const advance = otherCode => {
