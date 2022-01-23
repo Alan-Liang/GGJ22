@@ -65,7 +65,7 @@ const addLine = async str => {
   await nextTick()
   await delay(600)
   shadowLine.value = ''
-  await delay(50)
+  await delay(10)
   lines.pop()
   lines.push(str)
 }

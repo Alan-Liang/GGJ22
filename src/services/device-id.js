@@ -1,3 +1,4 @@
+import { ref } from 'vue'
 import { hash } from '../util/hash'
 import { pick } from '../util/random'
 
@@ -9,18 +10,25 @@ export const parseId = id => {
   if (id?.length != ID_LENGTH) return null
   const data = id.slice(0, DATA_LENGTH)
   const hashed = id.slice(DATA_LENGTH)
-  if (checksum(data) !== hashed) return null
-  return {} // TODO
+  if (checksum(data) !== hashed || !/^[0-9a-z]+$/.test(data)) return null
+  const [ a, b, c, d, e, f ] = data
+  return {
+    id,
+    seed: parseInt(hash(id).slice(0, 5), 36),
+    name: a + b + c + d,
+    oscpu: e + f,
+    checksum: hashed,
+  }
 }
 
 const STORAGE_KEY = 'youneed-device-id'
 
 const generateId = () => {
-  // TODO
+  const oscpu = hash(String(navigator.platform)).slice(0, 2)
   const data = Array
-    .from(Array(DATA_LENGTH).keys())
+    .from(Array(DATA_LENGTH - 2).keys())
     .map(() => pick('23456789qwertyupasdfghjkzxcvbnm'))
-    .join('')
+    .join('') + oscpu
   return data + checksum(data)
 }
 
@@ -32,4 +40,4 @@ export const id = (() => {
   return id
 })()
 
-export const deviceSeed = parseInt(hash(id).slice(0, 5), 36)
+export const otherParty = ref('')

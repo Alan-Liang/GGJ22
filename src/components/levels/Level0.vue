@@ -3,7 +3,6 @@
 </template>
 
 <script setup>
-import { defineEmits } from 'vue'
 import { addWindowListener } from '../../util/window-listener'
 import { keycode } from '../../util/keycodes'
 

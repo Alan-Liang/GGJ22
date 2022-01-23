@@ -8,6 +8,6 @@ export const levels = [
   [ 'You need two hands', Level0 ],
   [ ', and two ears', Level1 ],
   [ ', and two devices', Level2 ],
-  [ ', one desktop and one mobile', Level3 ],
-  [ ', and two friends', Level4 ],
+  [ 'on two platforms', Level3 ],
+  [ ', and you and your friend', Level4 ],
 ]
