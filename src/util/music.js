@@ -59,4 +59,5 @@ for (const key in music) {
     .filter(Boolean)
     .map(x => x.split(' '))
     .map(([ note, duration ]) => ({ note, duration }))
+  music[key].name = key
 }

@@ -59,7 +59,10 @@ const advance = otherCode => {
   stage.value++
 }
 
-const fail = () => stage.value = 0
+const fail = () => {
+  window.umami?.('fail-lv4')
+  stage.value = 0
+}
 
 const emit = defineEmits([ 'ok' ])
 </script>

@@ -18,6 +18,7 @@ currentLevel.value = 0
 // TODO: store in localStorage
 
 const nextLevel = () => {
+  window.umami?.('level' + currentLevel.value)
   if (currentLevel.value === levels.length - 1) {
     completed.value = true
     return ''
@@ -25,6 +26,7 @@ const nextLevel = () => {
   currentLevel.value++
   if (currentLevel.value === 3) {
     if (parseId(id).oscpu !== parseId(otherParty.value).oscpu) {
+      window.umami?.('skip3')
       currentLevel.value++
     }
   }

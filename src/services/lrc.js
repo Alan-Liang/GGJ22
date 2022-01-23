@@ -59,12 +59,18 @@ export const useChallengeInput = stop => {
       e.preventDefault()
       red()
       stop()
+      window.umami?.('fail-extra')
       extraneousHit = true
       window.removeEventListener('keydown', extraneousHitCallback)
     }
   }
 
   const play = async (music, seed_, onfail = () => {}) => {
+    const fail = () => {
+      window.umami?.('fail')
+      window.umami?.('fail-' + music.name)
+      onfail()
+    }
     let currentTime = 0
     sequence.length = 0
     seed(seed_)
@@ -80,7 +86,7 @@ export const useChallengeInput = stop => {
       await waitUntil(() => Tone.now() > now + time)
       if (extraneousHit) {
         extraneousHit = false
-        onfail()
+        fail()
         return
       }
       const key = source === 'left' ? keycode.DELETE : keycode.TAB
@@ -101,7 +107,7 @@ export const useChallengeInput = stop => {
       } catch (_) {
         red()
         stop()
-        onfail()
+        fail()
         return
       } finally {
         window.removeEventListener('keydown', callback)
