@@ -11,17 +11,17 @@
           :class="{ [`line-${lines.length - i}`]: true }"
         />
       </div>
-      <transition name="fade">
+      <transition name="fade-in">
         <p v-if="shadowLine" v-text="shadowLine" />
       </transition>
       <p ref="refHeightEl">to play this game.</p>
     </div>
-    <transition name="fade">
+    <transition name="fade-in">
       <p v-if="finalLine">Thank you for playing.</p>
     </transition>
   </main>
   <div id="instructions" class="container">
-    <transition name="fade-in-out" mode="out-in">
+    <transition name="fade" mode="out-in">
       <component :is="levelComponent" @ok="advance" />
     </transition>
   </div>
@@ -30,6 +30,7 @@
 <script setup>
 import { nextTick, ref, reactive } from 'vue'
 import { useLevelState } from './services/state'
+import { delay } from './util/promise'
 
 const { levelComponent, nextLevel, completed } = useLevelState()
 
@@ -38,8 +39,6 @@ const advance = async () => {
   if (!completed.value) await addLine(text)
   else await showThanks()
 }
-
-const delay = ms => new Promise(resolve => setTimeout(resolve, ms))
 
 const lines = reactive([
   'You need two hands',
@@ -86,6 +85,7 @@ const showThanks = async () => {
   // TODO: make scrollable
 }
 
+// eslint-disable-next-line no-unused-vars
 const test = () => {
   const linesToShow = `
   , and two ears
@@ -137,13 +137,6 @@ const test = () => {
 .line.line-1, .line.line-2 { opacity: 1; }
 .line.line-3 { opacity: 0.8; }
 .line.line-4 { opacity: 0.6; }
-
-.fade-enter-active, .fade-in-out-enter-active, .fade-in-out-leave-active {
-  transition: opacity 0.5s ease;
-}
-.fade-enter-from, .fade-in-out-enter-from, .fade-in-out-leave-to {
-  opacity: 0;
-}
 </style>
 
 <style>
@@ -183,4 +176,23 @@ main {
   height: 40vh;
   opacity: .8;
 }
+
+.fade-in-enter-active, .fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-in-enter-from, .fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+@keyframes redlight {
+  from { background: rgba(255, 80, 64, .4); }
+  to { background: transparent; }
+}
+@keyframes greenlight {
+  from { background: rgba(80, 255, 64, .4); }
+  to { background: transparent; }
+}
+
+#app.red { animation: redlight .4s; }
+#app.green { animation: greenlight .4s; }
 </style>
