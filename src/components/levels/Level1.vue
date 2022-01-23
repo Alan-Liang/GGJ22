@@ -23,7 +23,7 @@ addWindowListener('keydown', e => {
     e.preventDefault()
     if (playing.value) return
     const seed = Math.random()
-    const music_ = pick(Object.values(music)) && music.BOUNDLESS_OCEANS_VAST_SKIES
+    const music_ = pick(Object.values(music))
     play(music_, seed)
     playInput(music_, seed)
   }
