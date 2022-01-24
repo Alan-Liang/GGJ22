@@ -1,24 +1,16 @@
-# ggj22
+> You need JavaScript (not Java)    
+> , and two hands    
+> , and two ears    
+> , and ...
 
-## Project setup
-```
-yarn install
-```
+It's a web game. Click <https://symb.olic.link/games/ggj22/> to start.
 
-### Compiles and hot-reloads for development
-```
-yarn serve
-```
+Credits:    
+Typeface - Iosevka Etoile by be5invis    
+Sound - Tone.js
 
-### Compiles and minifies for production
-```
-yarn build
-```
-
-### Lints and fixes files
-```
-yarn lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Rhythms are from:    
+Omnipotent Youth Society - The Cable Temple    
+遠い日の歌 (I'm unaware of any English translations)    
+Don McLean - American Pie    
+Beyond - Boundless Oceans, Vast Skies
